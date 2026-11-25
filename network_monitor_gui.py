@@ -30,6 +30,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import datetime
 from pathlib import Path
+from netsuite_theme import apply_theme, add_header
 
 STATE_FILE = Path.home() / ".network_monitor_known_devices.json"
 LOG_FILE = Path.home() / "network_monitor.log"
@@ -165,7 +166,7 @@ class NetworkMonitorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Network Monitor")
-        self.root.geometry("820x520")
+        self.root.geometry("820x700")
         self.root.minsize(700, 420)
 
         self.event_queue = queue.Queue()
@@ -173,7 +174,9 @@ class NetworkMonitorApp:
         self.scanner_thread = None
         self.row_ips = {}  # maps treeview item id -> ip
 
+        add_header(self.root, "Network Monitor")
         self._build_ui()
+        apply_theme(self.root)
         self._poll_queue()
 
         if self.known_devices:
@@ -233,7 +236,7 @@ class NetworkMonitorApp:
         log_frame.pack(fill="both", expand=False)
 
         ttk.Label(log_frame, text="Activity Log:").pack(anchor="w")
-        self.log_text = tk.Text(log_frame, height=8, state="disabled", wrap="word", bg="#111", fg="#ddd")
+        self.log_text = tk.Text(log_frame, height=8, state="disabled", wrap="word", bg="#111c2a", fg="#e4eaf2")
         self.log_text.pack(fill="both", expand=True)
 
     # ---------------- Actions ----------------
